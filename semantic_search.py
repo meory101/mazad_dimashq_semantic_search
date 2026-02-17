@@ -7,15 +7,11 @@ model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 index = None
 metadata = [] 
 def generate_adv_embedding(text):
-    """تحويل نص إعلان واحد إلى Vector"""
     embedding = model.encode(text, convert_to_tensor=False)
     return np.array([embedding]).astype('float32')
 
 def build_database_embeddings(adv_list):
-    """
-    تستقبل قائمة من النصوص (70 ألف إعلان) وتنشئ Index للبحث السريع
-    adv_list: list of strings
-    """
+
     global index, metadata
     metadata = adv_list 
     
@@ -31,9 +27,7 @@ def build_database_embeddings(adv_list):
     print("تم بناء قاعدة البيانات بنجاح!")
 
 def match_query(query_text, threshold=0.50, top_k=10):
-    """
-    البحث عن الإعلانات التي تطابق البحث بنسبة 50% فأكثر
-    """
+
     if index is None:
         return "قاعدة البيانات غير جاهزة"
 
